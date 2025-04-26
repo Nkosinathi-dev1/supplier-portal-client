@@ -1,0 +1,8 @@
+<div>
+    <h3>Simple Search</h3>
+    <input [(ngModel)]="companyName" placeholder="Enter company name" />
+    <button (click)="searchPhone()">Search</button>
+    <p *ngIf="loading">Loading...</p>
+    <p *ngIf="phoneNumber">{{ phoneNumber }}</p>
+  </div>
+  

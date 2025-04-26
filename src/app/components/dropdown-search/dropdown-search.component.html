@@ -1,0 +1,14 @@
+<div>
+    <h3>Dropdown Search</h3>
+    <ng-select
+      [items]="suppliers"
+      bindLabel="companyName"
+      [(ngModel)]="selectedCompany"
+      placeholder="Select company">
+    </ng-select>
+  
+    <button (click)="searchPhone()">Search</button>
+    <p *ngIf="loading">Loading...</p>
+    <p *ngIf="phoneNumber">{{ phoneNumber }}</p>
+  </div>
+  

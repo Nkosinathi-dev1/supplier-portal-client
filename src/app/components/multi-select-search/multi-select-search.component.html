@@ -1,0 +1,17 @@
+<div>
+    <h3>Multi-Select Search</h3>
+    <ng-select
+      [items]="suppliers"
+      bindLabel="companyName"
+      [(ngModel)]="selectedCompanies"
+      [multiple]="true"
+      placeholder="Select companies">
+    </ng-select>
+  
+    <button (click)="searchPhones()">Search</button>
+    <p *ngIf="loading">Loading...</p>
+    <ul>
+      <li *ngFor="let result of results">{{ result }}</li>
+    </ul>
+  </div>
+  
