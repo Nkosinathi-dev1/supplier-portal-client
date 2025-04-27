@@ -7,6 +7,10 @@ export interface SupplierDto {
   telephone: string;
 }
 
+export interface SupplierDropdownDto {
+  id: number;
+  companyName: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +29,26 @@ export class SupplierService {
       .pipe(
         catchError(err => {
           const message = err.error || 'An unexpected error occurred.';
-          alert(message); // 👈🏽 Show the backend message
-          return throwError(() => new Error(message)); // 👈🏽 Propagate the error if needed
+          alert(message); // Show the backend message
+          return throwError(() => new Error(message)); // Propagate the error if needed
         })
       );
   }
-  // getSupplierPhone(companyName: string): Observable<string> {
-  //   return this.http.get(`${this.baseUrl}/suppliers?companyName=${encodeURIComponent(companyName)}`, { responseType: 'text' });
-  // }
+
+  getSuppliersByIds(ids: number[]): Observable<{ companyName: string; telephone: string }[]> {
+    return this.http.get<{ companyName: string; telephone: string }[]>(
+      `${this.baseUrl}/suppliers/multiple?ids=${ids.join(',')}`
+    );
+  }
+  
+
+  getPaginatedSuppliers(page: number, pageSize: number): Observable<SupplierDto[]> {
+    return this.http.get<SupplierDto[]>(`${this.baseUrl}/suppliers/page?page=${page}&pageSize=${pageSize}`);
+  }
+  
+
+  getDropdownSuppliers(page: number, pageSize: number): Observable<SupplierDropdownDto[]> {
+    return this.http.get<SupplierDropdownDto[]>(`${this.baseUrl}/suppliers/dropdown?page=${page}&pageSize=${pageSize}`);
+  }
   
 }

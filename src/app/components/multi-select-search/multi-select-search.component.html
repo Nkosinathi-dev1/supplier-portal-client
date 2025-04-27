@@ -3,14 +3,15 @@
     <ng-select
       [items]="suppliers"
       bindLabel="companyName"
-      [(ngModel)]="selectedCompanies"
+      bindValue="id"
+      [(ngModel)]="selectedCompanyIds"
       [multiple]="true"
       placeholder="Select companies">
     </ng-select>
   
-    <button (click)="searchPhones()">Search</button>
+    <button (click)="searchPhonesByIds()">Search</button>
     <p *ngIf="loading">Loading...</p>
-    <ul>
+    <ul *ngIf="!loading">
       <li *ngFor="let result of results">{{ result }}</li>
     </ul>
   </div>

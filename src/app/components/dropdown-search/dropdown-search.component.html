@@ -3,12 +3,13 @@
     <ng-select
       [items]="suppliers"
       bindLabel="companyName"
-      [(ngModel)]="selectedCompany"
+      bindValue="id"
+      [(ngModel)]="selectedCompanyId"
       placeholder="Select company">
     </ng-select>
   
-    <button (click)="searchPhone()">Search</button>
+    <button (click)="searchPhoneById()">Search</button>
     <p *ngIf="loading">Loading...</p>
-    <p *ngIf="phoneNumber">{{ phoneNumber }}</p>
+    <p *ngIf="!loading && phoneNumber">{{ phoneNumber }}</p>
   </div>
   

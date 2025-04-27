@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SupplierService, SupplierDto } from '../../services/supplier.service';
+import { SupplierService, SupplierDto, SupplierDropdownDto } from '../../services/supplier.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,39 +13,47 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './dropdown-search.component.css'
 })
 export class DropdownSearchComponent implements OnInit {
-  suppliers: SupplierDto[] = [];
-  selectedCompany: SupplierDto | null = null;
+  suppliers: SupplierDropdownDto[] = [];
+  selectedCompanyId: number | null = null;
   phoneNumber = '';
   loading = false;
 
   constructor(private supplierService: SupplierService) {}
 
   ngOnInit() {
-    // Dummy list or fetch actual supplier names later
-    this.suppliers = [
-      { companyName: 'Nathi (Pty) Ltd', telephone: '' },
-      { companyName: 'Eskom Holdings Limited', telephone: '' },
-      { companyName: 'Focus Rooms (Pty) Ltd', telephone: '' }
-    ];
+    this.loadSuppliers(1); // Load first page
   }
 
-  searchPhone() {
-    if (!this.selectedCompany) {
+  loadSuppliers(page: number) {
+    this.supplierService.getDropdownSuppliers(page, 10).subscribe({
+      next: (data) => this.suppliers = data,
+      error: (err) => console.error('Failed to load suppliers', err)
+    });
+  }
+
+  searchPhoneById() {
+    if (!this.selectedCompanyId) {
       this.phoneNumber = 'Please select a company.';
       return;
     }
 
     this.loading = true;
-    this.supplierService.getSupplierPhone(this.selectedCompany.companyName)
-      .subscribe({
-        next: (phone) => {
-          this.phoneNumber = `Phone: ${phone}`;
+
+    this.supplierService.getSuppliersByIds([this.selectedCompanyId]).subscribe({
+        next: (suppliers) => {
+          if (suppliers.length > 0) {
+            const supplier = suppliers[0];
+            this.phoneNumber = `Phone for ${supplier.companyName}: ${supplier.telephone}`;
+          } else {
+            this.phoneNumber = 'Supplier not found.';
+          }
           this.loading = false;
         },
-        error: (err) => {
+        error: (err: any) => {
           this.phoneNumber = err.error || 'Supplier not found.';
           this.loading = false;
         }
       });
+    }
+
   }
-}
