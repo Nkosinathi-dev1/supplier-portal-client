@@ -1,15 +1,31 @@
-<div>
-    <h3>Dropdown Search</h3>
+<div class="bg-white p-4 rounded-lg shadow">
+  <h3 class="text-lg font-semibold mb-4 text-gray-800">Dropdown Search</h3>
+
+  <div class="flex items-center mb-4 space-x-2">
     <ng-select
       [items]="suppliers"
       bindLabel="companyName"
       bindValue="id"
       [(ngModel)]="selectedCompanyId"
-      placeholder="Select company">
+      placeholder="Select a company"
+      class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
+      
+      <ng-template ng-option-tmp let-item="item">
+        <span class="flex items-center">
+          <input type="radio" [checked]="selectedCompanyId === item.id" class="mr-2">
+          {{ item.companyName }}
+        </span>
+      </ng-template>
     </ng-select>
-  
-    <button (click)="searchPhoneById()">Search</button>
-    <p *ngIf="loading">Loading...</p>
-    <p *ngIf="!loading && phoneNumber">{{ phoneNumber }}</p>
+
+    <button (click)="searchPhoneById()" 
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      Search
+    </button>
   </div>
-  
+
+  <p *ngIf="loading" class="text-gray-500">Loading...</p>
+  <p *ngIf="!loading && phoneNumber" class="mt-2 bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded">
+    {{ phoneNumber }}
+  </p>
+</div>

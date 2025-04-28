@@ -1,8 +1,20 @@
-<div>
-    <h3>Simple Search</h3>
-    <input [(ngModel)]="companyName" placeholder="Enter company name" />
-    <button (click)="searchPhone()">Search</button>
-    <p *ngIf="loading">Loading...</p>
-    <p *ngIf="phoneNumber">{{ phoneNumber }}</p>
+<div class="bg-white p-4 rounded-lg shadow">
+  <h3 class="text-lg font-semibold mb-4">Simple Search</h3>
+
+  <div class="flex items-center mb-4 space-x-2">
+    <input [(ngModel)]="companyName"
+            placeholder="Enter company name"
+            class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+
+    <button (click)="searchPhone()"
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      Search
+    </button>
   </div>
-  
+
+  <p *ngIf="loading" class="text-gray-500">Loading...</p>
+  <p *ngIf="!loading && phoneNumber" class="mt-2 bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded">
+    {{ phoneNumber }}
+  </p>
+</div>
+

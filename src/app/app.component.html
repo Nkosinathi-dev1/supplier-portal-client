@@ -1,10 +1,59 @@
-<div style="margin-top: 2rem;">
-  <!-- --adding of company name and phone here -->
-   <app-add-supplier (supplierAdded)="reloadDropdowns()"></app-add-supplier>
-  <h2>Search Suppliers</h2>
-  <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
-    <app-simple-search></app-simple-search>
-    <app-dropdown-search></app-dropdown-search>
-    <app-multi-select-search></app-multi-select-search>
+<div class="p-6 max-w-6xl mx-auto">
+  <h1 class="text-3xl font-bold mb-6 text-center text-blue-700">Supplier Management Portal</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+    <!-- Left: Add Supplier Form -->
+    <div class="bg-white p-6 rounded-lg shadow-md h-full">
+      <h2 class="text-2xl font-semibold mb-4 text-gray-800">Add Supplier</h2>
+      <app-add-supplier (supplierAdded)="reloadDropdowns()"></app-add-supplier>
+    </div>
+
+    <!-- Right: Tabbed Search -->
+    <div class="bg-white p-6 rounded-lg shadow-md h-full">
+      <h2 class="text-2xl font-semibold mb-4 text-gray-800">Search Suppliers</h2>
+
+      <!-- Tabs -->
+      <div class="flex space-x-4 mb-4">
+        <button (click)="activeTab = 'simple'" 
+                [class.bg-blue-600]="activeTab === 'simple'" 
+                class="px-4 py-2 rounded text-white"
+                [ngClass]="{'bg-blue-600': activeTab === 'simple', 'bg-gray-400': activeTab !== 'simple'}">
+          Simple Search
+        </button>
+        <button (click)="activeTab = 'dropdown'" 
+                class="px-4 py-2 rounded text-white"
+                [ngClass]="{'bg-blue-600': activeTab === 'dropdown', 'bg-gray-400': activeTab !== 'dropdown'}">
+          Dropdown Search
+        </button>
+        <button (click)="activeTab = 'multi'" 
+                class="px-4 py-2 rounded text-white"
+                [ngClass]="{'bg-blue-600': activeTab === 'multi', 'bg-gray-400': activeTab !== 'multi'}">
+          Multi-Select Search
+        </button>
+      </div>
+
+      <!-- Content with Animation -->
+      <div class="transition-opacity duration-500 ease-in-out" [ngClass]="{'opacity-100': true}">
+        <ng-container [ngSwitch]="activeTab">
+          <!-- Simple -->
+          <div *ngSwitchCase="'simple'">
+            <p class="mb-2 text-sm text-gray-600">🔍 Enter the company name manually.</p>
+            <app-simple-search></app-simple-search>
+          </div>
+
+          <!-- Dropdown -->
+          <div *ngSwitchCase="'dropdown'">
+            <p class="mb-2 text-sm text-gray-600">📂 Select a company from the dropdown.</p>
+            <app-dropdown-search></app-dropdown-search>
+          </div>
+
+          <!-- Multi -->
+          <div *ngSwitchCase="'multi'">
+            <p class="mb-2 text-sm text-gray-600">✅ Select multiple companies and see their numbers.</p>
+            <app-multi-select-search></app-multi-select-search>
+          </div>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </div>
