@@ -1,6 +1,7 @@
 <div style="margin-top: 2rem;">
+  <!-- --adding of company name and phone here -->
+   <app-add-supplier (supplierAdded)="reloadDropdowns()"></app-add-supplier>
   <h2>Search Suppliers</h2>
-  
   <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
     <app-simple-search></app-simple-search>
     <app-dropdown-search></app-dropdown-search>

@@ -1,0 +1,16 @@
+<div>
+    <h3>Add Supplier</h3>
+    <form (ngSubmit)="onSubmit()">
+      <label>Company Name:</label>
+      <input type="text" [(ngModel)]="companyName" name="companyName" required />
+  
+      <label>Telephone:</label>
+      <input type="text" [(ngModel)]="telephone" name="telephone" required />
+  
+      <button type="submit" [disabled]="loading">Add Supplier</button>
+    </form>
+  
+    <p *ngIf="loading">Saving...</p>
+    <p *ngIf="message">{{ message }}</p>
+  </div>
+  
