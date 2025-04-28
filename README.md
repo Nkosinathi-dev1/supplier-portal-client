@@ -1,4 +1,25 @@
-# SupplierPortal
+# Supplier Portal - Angular Frontend
+
+This is the Angular frontend for the mini project as per the attached EnverSoft specification.
+
+- **Tailwind CSS** used for custom styling.
+- Connects to a **.NET backend** running at:
+
+
+- The backend must be running (on https://localhost:7158 by default) for full functionality such as adding and searching suppliers.
+
+## Prerequisites
+
+- Node.js (16+)
+- Angular CLI (`npm install -g @angular/cli`)
+- Backend API running on `https://localhost:7158`
+
+## Setup
+
+1. Install dependencies:
+ ```bash
+ npm install
+
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
 
