@@ -3,6 +3,7 @@ import { SupplierService, SupplierDto, SupplierDropdownDto } from '../../service
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Subject } from 'rxjs';
 
 
 
@@ -18,17 +19,43 @@ export class DropdownSearchComponent implements OnInit {
   phoneNumber = '';
   loading = false;
 
+  page = 1;
+  pageSize = 10;
+  loadingSuppliers = false;
+  allLoaded = false;
+
+  typeahead$: Subject<string> = new Subject<string>();
+
+
   constructor(private supplierService: SupplierService) {}
 
   ngOnInit() {
-    this.loadSuppliers(1); // Load first page
+    this.loadSuppliers();
   }
 
-  loadSuppliers(page: number) {
-    this.supplierService.getDropdownSuppliers(page, 10).subscribe({
-      next: (data) => this.suppliers = data,
-      error: (err) => console.error('Failed to load suppliers', err)
+  loadSuppliers() {
+    if (this.loadingSuppliers || this.allLoaded) return;
+
+    this.loadingSuppliers = true;
+
+    this.supplierService.getDropdownSuppliers(this.page, this.pageSize).subscribe({
+      next: (data) => {
+        if (data.length < this.pageSize) {
+          this.allLoaded = true;
+        }
+        this.suppliers = [...this.suppliers, ...data];
+        this.page++;
+        this.loadingSuppliers = false;
+      },
+      error: (err) => {
+        console.error('Failed to load suppliers', err);
+        this.loadingSuppliers = false;
+      }
     });
+  }
+
+  onScrollToEnd() {
+    this.loadSuppliers();
   }
 
   searchPhoneById() {
@@ -43,7 +70,7 @@ export class DropdownSearchComponent implements OnInit {
         next: (suppliers) => {
           if (suppliers.length > 0) {
             const supplier = suppliers[0];
-            this.phoneNumber = `Phone for ${supplier.companyName}: ${supplier.telephone}`;
+            this.phoneNumber = `${supplier.companyName} - ${supplier.telephone}`;
           } else {
             this.phoneNumber = 'Supplier not found.';
           }

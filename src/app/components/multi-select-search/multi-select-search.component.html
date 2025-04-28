@@ -10,13 +10,19 @@
       [multiple]="true"
       [closeOnSelect]="false"
       placeholder="Select companies"
-      class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
+      class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+      (scrollToEnd)="onScrollToEnd()"
+      [loading]="loadingSuppliers">
 
       <ng-template ng-option-tmp let-item="item">
-        <span class="flex items-center">
-          <input type="checkbox" [checked]="selectedCompanyIds.includes(item.id)" class="mr-2">
+        <div class="flex items-center px-3 py-2 w-full rounded border border-transparent"
+             [ngClass]="{
+               'bg-blue-600 text-white border-blue-700': selectedCompanyIds.includes(item.id),
+               'hover:bg-blue-600 hover:text-white cursor-pointer': true,
+               'mb-1': true
+             }">
           {{ item.companyName }}
-        </span>
+        </div>
       </ng-template>
     </ng-select>
 
@@ -25,7 +31,6 @@
       Search
     </button>
   </div>
-
 
   <p *ngIf="loading" class="text-gray-500">Loading...</p>
 

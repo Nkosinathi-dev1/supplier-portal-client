@@ -17,17 +17,40 @@ export class MultiSelectSearchComponent implements OnInit {
   results: string[] = [];
   loading = false;
 
+  page = 1;
+  pageSize = 10;
+  loadingSuppliers = false;
+  allLoaded = false;
+
   constructor(private supplierService: SupplierService) {}
 
   ngOnInit() {
-    this.loadSuppliers(1); // Load first page
+    this.loadSuppliers();
   }
 
-  loadSuppliers(page: number) {
-    this.supplierService.getDropdownSuppliers(page, 10).subscribe({
-      next: (data) => this.suppliers = data,
-      error: (err) => console.error('Failed to load suppliers', err)
+  loadSuppliers() {
+    if (this.loadingSuppliers || this.allLoaded) return;
+
+    this.loadingSuppliers = true;
+
+    this.supplierService.getDropdownSuppliers(this.page, this.pageSize).subscribe({
+      next: (data) => {
+        if (data.length < this.pageSize) {
+          this.allLoaded = true;
+        }
+        this.suppliers = [...this.suppliers, ...data];
+        this.page++;
+        this.loadingSuppliers = false;
+      },
+      error: (err) => {
+        console.error('Failed to load suppliers', err);
+        this.loadingSuppliers = false;
+      }
     });
+  }
+
+  onScrollToEnd() {
+    this.loadSuppliers();
   }
 
   searchPhonesByIds() {
@@ -40,7 +63,7 @@ export class MultiSelectSearchComponent implements OnInit {
 
     this.supplierService.getSuppliersByIds(this.selectedCompanyIds).subscribe({
       next: (suppliers) => {
-        this.results = suppliers.map(s => `${s.companyName}: ${s.telephone}`);
+        this.results = suppliers.map(s => `${s.companyName} - ${s.telephone}`);
         this.loading = false;
       },
       error: (err) => {

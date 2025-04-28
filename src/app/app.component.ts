@@ -23,19 +23,25 @@ export class AppComponent {
   @ViewChild(MultiSelectSearchComponent) multiSelectSearch!: MultiSelectSearchComponent;
 
   ngAfterViewInit() {
-    // Optionally preload dropdowns here
-    this.dropdownSearch.loadSuppliers(1);
-    this.multiSelectSearch.loadSuppliers(1);
+    setTimeout(() => {
+      if (this.dropdownSearch) {
+        this.dropdownSearch.loadSuppliers();
+      }
+      if (this.multiSelectSearch) {
+        this.multiSelectSearch.loadSuppliers();
+      }
+    });
   }
+  
 
   reloadDropdowns() {
     // Check if components are available
     if (this.dropdownSearch) {
-      this.dropdownSearch.loadSuppliers(1);
+      this.dropdownSearch.loadSuppliers();
     }
 
     if (this.multiSelectSearch) {
-      this.multiSelectSearch.loadSuppliers(1);
+      this.multiSelectSearch.loadSuppliers();
     }
   }
 }

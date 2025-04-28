@@ -8,15 +8,24 @@
       bindValue="id"
       [(ngModel)]="selectedCompanyId"
       placeholder="Select a company"
-      class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
-      
+      class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+      [searchable]="true"
+      (scrollToEnd)="onScrollToEnd()"
+      [loading]="loadingSuppliers">
+
       <ng-template ng-option-tmp let-item="item">
-        <span class="flex items-center">
-          <input type="radio" [checked]="selectedCompanyId === item.id" class="mr-2">
+        <div class="flex items-center px-3 py-2 w-full rounded border border-transparent"
+            [ngClass]="{
+              'bg-blue-600 text-white border-blue-700': selectedCompanyId === item.id,
+              'hover:bg-blue-600 hover:text-white cursor-pointer': true
+            }">
           {{ item.companyName }}
-        </span>
+        </div>
       </ng-template>
     </ng-select>
+
+
+
 
     <button (click)="searchPhoneById()" 
             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
