@@ -1,5 +1,5 @@
 ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items {
-    max-height: 200px !important;
+    max-height: 150px !important;
     overflow-y: auto !important;
   }
   
@@ -21,16 +21,5 @@
 
   ::ng-deep .ng-value:hover {
     background-color: #1e40af !important; /* Tailwind bg-blue-800 */
-  }
-  
-
-  /* Hide scrollbar in ng-select dropdown */
-::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
-  }
-  
-  ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
   }
   
