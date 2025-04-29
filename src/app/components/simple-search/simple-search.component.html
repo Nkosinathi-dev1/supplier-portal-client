@@ -2,9 +2,20 @@
   <h3 class="text-lg font-semibold mb-4">Simple Search</h3>
 
   <div class="flex items-center mb-4 space-x-2">
-    <input [(ngModel)]="companyName"
-            placeholder="Enter company name"
-            class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+    <div class="relative flex-1">
+      <!-- add `pr-8` so text won’t hit the × -->
+      <input
+        [(ngModel)]="companyName"
+        placeholder="Enter company name"
+        class="w-full border border-gray-300 rounded px-3 py-2 pr-8 focus:outline-none focus:ring focus:border-blue-400"/>
+      <!-- tiny × to clear the form and x only shows only when there is text -->
+      <button
+        *ngIf="companyName"
+        type="button"
+        (click)="clearForm()"
+        class="absolute right-2 top-1/2 -translate-y-1/2 text-black-400
+               hover:text-gray-600 focus:outline-none">&times;</button>
+    </div>
 
     <button (click)="searchPhone()"
             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">

@@ -22,6 +22,8 @@ export class SimpleSearchComponent {
       return;
     }
     this.loading = true;
+    this.phoneNumber = '';
+
     this.supplierService.getSupplierPhone(this.companyName)
       .subscribe({
         next: (phone) => {
@@ -33,5 +35,11 @@ export class SimpleSearchComponent {
           this.loading = false;
         }
       });
+  }
+
+   /** Resets input and message */
+   clearForm() {
+    this.companyName = '';
+    this.phoneNumber = '';
   }
 }

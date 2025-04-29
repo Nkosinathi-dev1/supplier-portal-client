@@ -29,7 +29,7 @@ export class SupplierService {
       .pipe(
         catchError(err => {
           const message = err.error || 'An unexpected error occurred.';
-          alert(message); // Show the backend message
+          // console.log(message); // Show the backend message
           return throwError(() => new Error(message)); // Propagate the error if needed
         })
       );

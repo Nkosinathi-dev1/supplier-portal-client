@@ -36,6 +36,7 @@ export class AddSupplierComponent {
         this.message = 'Supplier added successfully!';
         this.companyName = '';
         this.telephone = '';
+        this.clearForm(false); 
         this.loading = false;
 
         this.supplierAdded.emit();
@@ -45,5 +46,11 @@ export class AddSupplierComponent {
         this.loading = false;
       }
     });
+  }
+
+  clearForm(resetMessage: boolean = true) {
+    this.companyName = '';
+    this.telephone   = '';
+    if (resetMessage) this.message = '';
   }
 }
