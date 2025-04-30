@@ -1,5 +1,7 @@
 # Supplier Portal - Angular Frontend
 
+![Supplier Management Portal](https://github.com/user-attachments/assets/f657eab5-2560-4d99-8eea-d2391a0a0739)
+
 This is the Angular frontend for the mini project as per the attached EnverSoft specification.
 
 - **Tailwind CSS** used for custom styling.
